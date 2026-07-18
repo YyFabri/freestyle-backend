@@ -1,6 +1,12 @@
-__pycache__/
-*.pyc
-db.sqlite3
-.env
-venv/
+# Entorno virtual
+.venv/
 env/
+venv/
+venv_backend/
+
+# Archivos de caché y configuración local
+__pycache__/
+*.py[cod]
+.env
+db.sqlite3
+.DS_Store

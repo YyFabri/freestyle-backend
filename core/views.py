@@ -13,6 +13,14 @@ from .serializers import (
     MatchdaySerializer, BattleSerializer, StandingSerializer
 )
 
+class FreestylerViewSet(viewsets.ModelViewSet):
+    queryset = Freestyler.objects.all()
+    serializer_class = FreestylerSerializer
+
+class CompetitionViewSet(viewsets.ModelViewSet):
+    queryset = Competition.objects.all()
+    serializer_class = CompetitionSerializer
+
 class StandingViewSet(viewsets.ModelViewSet):
     queryset = Standing.objects.all()
     serializer_class = StandingSerializer
