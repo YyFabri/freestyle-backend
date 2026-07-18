@@ -1,3 +1,14 @@
+import os
+import django
+from dotenv import load_dotenv
+
+# Cargar variables de entorno
+load_dotenv() 
+
+# Configurar Django para que el script pueda usar el ORM
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+django.setup()
+
 from django.core.management.base import BaseCommand
 from core.models import Freestyler, Competition, Season, Matchday, Battle, Standing
 from scraper_core import FreestyleStatsScraper
@@ -110,7 +121,7 @@ class Command(BaseCommand):
         for comp in Competition.objects.filter(name__in=nombres_catalogo):
             slug = comp.name.lower().replace(' ', '-')
 
-            for season in comp.season_set.all():
+            for season in comp.seasons.all():
                 url_base = f"https://freestylestats.com/competition/{slug}/{season.name}"
                 self.stdout.write(f"--- {comp.name} ({season.name}) ---")
 
