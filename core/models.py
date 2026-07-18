@@ -51,8 +51,6 @@ class Battle(models.Model):
     votes_replica = models.IntegerField(null=True, blank=True)
     has_replica = models.BooleanField(default=False)
     video_url = models.URLField(null=True, blank=True)
-    matchday = models.ForeignKey(Matchday, on_delete=models.CASCADE, related_name='battles')
-    has_replica = models.BooleanField(default=False)
 
 
 class Standing(models.Model):
