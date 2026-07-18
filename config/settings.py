@@ -12,9 +12,15 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 import dj_database_url
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Cargamos el .env ACÁ, antes de leer cualquier variable de entorno.
+# Si no hacemos esto, DATABASE_URL nunca llega a tiempo para sync_stats,
+# migrate, runserver, etc. cuando corren en local.
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production

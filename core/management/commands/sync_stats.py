@@ -1,14 +1,3 @@
-import os
-import django
-from dotenv import load_dotenv
-
-# Cargar variables de entorno
-load_dotenv() 
-
-# Configurar Django para que el script pueda usar el ORM
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
-django.setup()
-
 from django.core.management.base import BaseCommand
 from core.models import Freestyler, Competition, Season, Matchday, Battle, Standing
 from scraper_core import FreestyleStatsScraper
