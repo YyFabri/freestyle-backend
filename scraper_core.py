@@ -47,7 +47,7 @@ class FreestyleStatsScraper:
     # ==========================================
 
     def get_links_jornadas(self, comp_url):
-        response = self.session.get(comp_url)
+        response = self.session.get(comp_url, timeout=15)
         soup = BeautifulSoup(response.text, 'html.parser')
         links = set()
         for a in soup.find_all('a', href=True):
@@ -61,7 +61,7 @@ class FreestyleStatsScraper:
         headers = self.session.headers.copy()
         headers.update({"RSC": "1"})
         
-        response = self.session.get(self.base_url, headers=headers)
+        response = self.session.get(self.base_url, headers=headers, timeout=15)
         response.encoding = 'utf-8'
 
         if response.status_code != 200:
@@ -115,7 +115,7 @@ class FreestyleStatsScraper:
         return eventos_estructurados
 
     def get_tabla_posiciones(self, url_tabla):
-        response = self.session.get(url_tabla)
+        response = self.session.get(url_tabla, timeout=15)
         response.encoding = 'utf-8'
         
         if response.status_code != 200:
@@ -167,7 +167,7 @@ class FreestyleStatsScraper:
         return tabla_estructurada
 
     def get_bracket_data(self, url_torneo):
-        response = self.session.get(url_torneo)
+        response = self.session.get(url_torneo, timeout=15)
         soup = BeautifulSoup(response.text, 'html.parser')
         
         bracket_data = []
@@ -190,7 +190,7 @@ class FreestyleStatsScraper:
         return bracket_data
 
     def get_fixture_jornada(self, url_jornada):
-        response = self.session.get(url_jornada)
+        response = self.session.get(url_jornada, timeout=15)
         response.encoding = 'utf-8'
         
         if response.status_code != 200:
@@ -248,7 +248,7 @@ class FreestyleStatsScraper:
     # === NUEVO MÉTODO ===
     def get_battle_details(self, battle_url):
 
-        response = self.session.get(battle_url)
+        response = self.session.get(battle_url, timeout=15)
         soup = BeautifulSoup(response.text, 'html.parser')
         
         detalles = {

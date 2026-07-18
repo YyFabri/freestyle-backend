@@ -148,7 +148,13 @@ class Command(BaseCommand):
                             mc2.profile_picture_url = b['mc_2_avatar']
                             mc2.save()
 
-                        detalles = scraper.get_battle_details(b['battle_url'])
+                        try:
+                            detalles = scraper.get_battle_details(b['battle_url'])
+                        except Exception as e:
+                            self.stdout.write(self.style.WARNING(
+                                f"  -> No se pudo leer detalle de batalla ({b['battle_url']}): {e}. Se guarda sin video/réplica."
+                            ))
+                            detalles = {'has_replica': False, 'video_url': None}
 
                         Battle.objects.update_or_create(
                             matchday=matchday, mc_1=mc1, mc_2=mc2,
