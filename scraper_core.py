@@ -46,6 +46,17 @@ class FreestyleStatsScraper:
     # MÉTODOS PÚBLICOS (API DEL SCRAPER)
     # ==========================================
 
+    def get_links_jornadas(self, comp_url):
+        response = self.session.get(comp_url)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        links = set()
+        for a in soup.find_all('a', href=True):
+            href = a['href']
+            # Detecta cualquier subsección de calendario
+            if "/competition/" in href and any(x in href for x in ["jornada", "fecha", "battle-", "final"]):
+                links.add(f"{self.base_url.rstrip('/')}{href}")
+        return list(links)
+
     def get_calendario(self):
         headers = self.session.headers.copy()
         headers.update({"RSC": "1"})
@@ -236,9 +247,7 @@ class FreestyleStatsScraper:
 
     # === NUEVO MÉTODO ===
     def get_battle_details(self, battle_url):
-        """
-        Extrae los detalles específicos (Video y recuento de votos) entrando a la batalla.
-        """
+
         response = self.session.get(battle_url)
         soup = BeautifulSoup(response.text, 'html.parser')
         

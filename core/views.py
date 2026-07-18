@@ -1,3 +1,8 @@
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets
+from .models import Standing, Battle, Competition
+from .serializers import StandingSerializer, BattleSerializer, CompetitionSerializer
+
 from django.core.management import call_command
 from django.http import JsonResponse
 import os
@@ -8,11 +13,17 @@ from .serializers import (
     MatchdaySerializer, BattleSerializer, StandingSerializer
 )
 
-class FreestylerViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Freestyler.objects.all()
-    serializer_class = FreestylerSerializer
+class StandingViewSet(viewsets.ModelViewSet):
+    queryset = Standing.objects.all()
+    serializer_class = StandingSerializer
+    filter_backends = [DjangoFilterBackend]
+    # Filtramos por nombre de competencia y nombre de temporada
+    filterset_fields = {
+        'season__competition__name': ['exact'],
+        'season__name': ['exact'],
+    }
 
-class CompetitionViewSet(viewsets.ReadOnlyModelViewSet):
+class CompetitionViewSet(viewsets.ModelViewSet):
     queryset = Competition.objects.all()
     serializer_class = CompetitionSerializer
 

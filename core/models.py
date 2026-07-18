@@ -23,7 +23,7 @@ class Season(models.Model):
         return f"{self.competition.name} - {self.name}"
 
 class Matchday(models.Model):
-    event_id = models.CharField(max_length=100, unique=True)
+    event_id = models.CharField(max_length=255, unique=True)
     season = models.ForeignKey(Season, on_delete=models.CASCADE, related_name='matchdays')
     name = models.CharField(max_length=100)
     start_datetime_utc = models.DateTimeField(null=True, blank=True)
@@ -45,14 +45,15 @@ class Battle(models.Model):
     score_2 = models.IntegerField(null=True, blank=True)
     winner = models.ForeignKey(Freestyler, on_delete=models.SET_NULL, null=True, blank=True, related_name='battles_won')
     is_exhibition = models.BooleanField(default=False)
-    status = models.CharField(max_length=20, choices=[('scheduled', 'Programada'), ('finished', 'Finalizada')])
-    
-    # === NUEVOS CAMPOS PARA EL NIVEL FOTMOB ===
+    status = models.CharField(max_length=20, choices=[('scheduled', 'Programada'), ('finished', 'Finalizada')])    
     votes_mc_1 = models.IntegerField(null=True, blank=True)
     votes_mc_2 = models.IntegerField(null=True, blank=True)
     votes_replica = models.IntegerField(null=True, blank=True)
     has_replica = models.BooleanField(default=False)
     video_url = models.URLField(null=True, blank=True)
+    matchday = models.ForeignKey(Matchday, on_delete=models.CASCADE, related_name='battles')
+    has_replica = models.BooleanField(default=False)
+
 
 class Standing(models.Model):
     season = models.ForeignKey(Season, on_delete=models.CASCADE, related_name='standings')

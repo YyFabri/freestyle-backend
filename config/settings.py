@@ -58,8 +58,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',  # <-- Agregamos esto
     'rest_framework',
+    'django_filters',
     'core',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
